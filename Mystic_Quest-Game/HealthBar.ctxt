@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.target=HealthBar
+comment1.params=name\ max\ color
+comment1.target=HealthBar(java.lang.String,\ int,\ greenfoot.Color)
+comment2.params=hp
+comment2.target=void\ updateHP(int)
+comment3.params=
+comment3.target=void\ updateDisplay()
+numComments=4

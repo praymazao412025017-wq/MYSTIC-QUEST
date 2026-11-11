@@ -1,0 +1,15 @@
+#BlueJ class context
+comment0.target=Stage1World
+comment1.params=
+comment1.target=Stage1World()
+comment2.params=
+comment2.target=void\ updateHP()
+comment3.params=
+comment3.target=void\ laserHit()
+comment4.params=
+comment4.target=void\ poisonHit()
+comment5.params=
+comment5.target=void\ playerCorrect()
+comment6.params=
+comment6.target=void\ playerWrong()
+numComments=7
