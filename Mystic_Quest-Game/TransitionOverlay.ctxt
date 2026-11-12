@@ -1,0 +1,7 @@
+#BlueJ class context
+comment0.target=TransitionOverlay
+comment1.params=nextWorld
+comment1.target=TransitionOverlay(greenfoot.World)
+comment2.params=
+comment2.target=void\ act()
+numComments=3

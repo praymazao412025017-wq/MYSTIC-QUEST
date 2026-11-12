@@ -1,5 +1,7 @@
 
 import greenfoot.*;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class WordPuzzle extends Actor
 {
@@ -8,7 +10,12 @@ public class WordPuzzle extends Actor
         "U - K - U - B",
         "I - P - A",
         "U - N - B - G - A",
-        "U - K - A - Y"
+        "U - K - A - Y",
+        "M - A - Y - A",
+        "I - S - A - N",
+        "I - P - A - S",
+        "N - A - K - I",
+        "A - J - E - M",
     };
 
     private String[] answers = {
@@ -16,8 +23,16 @@ public class WordPuzzle extends Actor
         "BUKU",
         "API",
         "BUNGA",
-        "KAYU"
+        "KAYU",
+        "AYAM",
+        "NASI",
+        "SAPI",
+        "IKAN",
+        "MEJA",
     };
+
+    private ArrayList<Integer> urutanSoal =
+        new ArrayList<Integer>();
 
     private int questionIndex = 0;
 
@@ -26,7 +41,20 @@ public class WordPuzzle extends Actor
 
     public WordPuzzle()
     {
+        for (int i = 0; i < questions.length; i++)
+        {
+            urutanSoal.add(i);
+        }
+
+        Collections.shuffle(urutanSoal);
+
         updateDisplay();
+    }
+
+    // Mengambil indeks soal yang sudah diacak
+    private int currentQuestion()
+    {
+        return urutanSoal.get(questionIndex);
     }
 
     public void act()
@@ -47,7 +75,7 @@ public class WordPuzzle extends Actor
             key.charAt(0) <= 'z')
         {
             if (input.length() <
-                answers[questionIndex].length())
+                answers[currentQuestion()].length())
             {
                 input += key.toUpperCase();
             }
@@ -79,7 +107,7 @@ public class WordPuzzle extends Actor
         Stage1World world =
             (Stage1World)getWorld();
 
-        if (input.equals(answers[questionIndex]))
+        if (input.equals(answers[currentQuestion()]))
         {
             answered = true;
             world.playerCorrect();
@@ -98,9 +126,11 @@ public class WordPuzzle extends Actor
     {
         questionIndex++;
 
+        // Jika semua soal selesai, acak kembali
         if (questionIndex >= answers.length)
         {
             questionIndex = 0;
+            Collections.shuffle(urutanSoal);
         }
 
         input = "";
@@ -111,6 +141,8 @@ public class WordPuzzle extends Actor
 
     private void updateDisplay()
     {
+        int index = currentQuestion();
+
         GreenfootImage img =
             new GreenfootImage(500, 155);
 
@@ -131,10 +163,7 @@ public class WordPuzzle extends Actor
             new Font("Arial", true, false, 20)
         );
 
-        img.drawString(
-            "SUSUN KATA",
-            20, 29
-        );
+        img.drawString("SUSUN KATA", 20, 29);
 
         // Nomor soal
         img.setFont(
@@ -157,14 +186,10 @@ public class WordPuzzle extends Actor
             new Font("Arial", true, false, 21)
         );
 
-        img.drawString(
-            questions[questionIndex],
-            20, 69
-        );
+        img.drawString(questions[index], 20, 69);
 
         // Kotak jawaban
-        int length =
-            answers[questionIndex].length();
+        int length = answers[index].length();
 
         for (int i = 0; i < length; i++)
         {
@@ -204,10 +229,7 @@ public class WordPuzzle extends Actor
                 letter = input.substring(i, i + 1);
             }
 
-            img.drawString(
-                letter,
-                x + 14, 110
-            );
+            img.drawString(letter, x + 14, 110);
         }
 
         // Petunjuk

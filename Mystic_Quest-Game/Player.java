@@ -1,4 +1,3 @@
-
 import greenfoot.*;
 
 public class Player extends Actor
@@ -9,13 +8,35 @@ public class Player extends Actor
     private int startX;
     private int startY;
 
+    // Gambar karakter
+    private GreenfootImage idleImage;
+    private GreenfootImage[] walkImages = new GreenfootImage[3];
+
+    private int walkFrame = 0;
+    private int animationTimer = 0;
+
     public Player()
     {
-        GreenfootImage img =
-            new GreenfootImage("playeridle (1) (1).png");
+        idleImage = new GreenfootImage(
+            "playeridle (1) (1).png"
+        );
 
-        img.scale(300, 300);
-        setImage(img);
+        idleImage.scale(300, 300);
+        setImage(idleImage);
+
+        walkImages[0] =
+            new GreenfootImage("playeridlemove1.png");
+
+        walkImages[1] =
+            new GreenfootImage("playeridlemove2.png");
+
+        walkImages[2] =
+            new GreenfootImage("playeridlemove3.png");
+
+        for (int i = 0; i < walkImages.length; i++)
+        {
+            walkImages[i].scale(300, 300);
+        }
     }
 
     public void attack()
@@ -27,22 +48,37 @@ public class Player extends Actor
 
             startX = getX();
             startY = getY();
+
+            setImage(idleImage);
         }
     }
 
     public void act()
     {
+        // Jika Monster sudah kalah,
+        // Ari berjalan otomatis ke kiri.
+        if (getWorld() instanceof Stage1World)
+        {
+            Stage1World stage =
+                (Stage1World)getWorld();
+
+            
+        }
+
+        // Saat menyerang, kaki tetap diam.
         if (attacking)
         {
+            setImage(idleImage);
+
             attackTimer++;
 
-            // Ari maju
             if (attackTimer <= 10)
             {
-                setLocation(startX + attackTimer * 5, startY);
+                setLocation(
+                    startX + attackTimer * 5,
+                    startY
+                );
             }
-
-            // Ari kembali ke posisi awal
             else if (attackTimer <= 20)
             {
                 setLocation(
@@ -55,6 +91,30 @@ public class Player extends Actor
                 setLocation(startX, startY);
                 attacking = false;
             }
+
+            return;
+        }
+
+        // Selama pertarungan, Ari diam.
+        setImage(idleImage);
+    }
+
+    private void animateWalk()
+    {
+        animationTimer++;
+
+        if (animationTimer >= 8)
+        {
+            animationTimer = 0;
+
+            walkFrame++;
+
+            if (walkFrame >= walkImages.length)
+            {
+                walkFrame = 0;
+            }
+
+            setImage(walkImages[walkFrame]);
         }
     }
 
@@ -62,19 +122,18 @@ public class Player extends Actor
     {
         return attacking;
     }
-    
-public void shootLaser()
-{
-    if (getWorld() != null)
+
+    public void shootLaser()
     {
-        Laser laser = new Laser();
+        if (getWorld() != null)
+        {
+            Laser laser = new Laser();
 
-        getWorld().addObject(
-            laser,
-            getX() + 60,
-            getY()
-        );
+            getWorld().addObject(
+                laser,
+                getX() + 60,
+                getY()
+            );
+        }
     }
-
-}
 }

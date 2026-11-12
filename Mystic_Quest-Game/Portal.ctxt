@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.target=Portal
+comment1.params=question\ options\ correctAnswerIndex
+comment1.target=Portal(java.lang.String,\ java.lang.String[],\ int)
+comment2.params=
+comment2.target=void\ act()
+comment3.params=
+comment3.target=void\ checkPlayerCollision()
+comment4.params=
+comment4.target=void\ unlock()
+numComments=5
